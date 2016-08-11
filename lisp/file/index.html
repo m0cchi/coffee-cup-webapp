@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta charset="utf-8" />
+  	<title>coffee sample app</title>
+  </head>
+  <body>
+  	<pre>
+  1 (println "---defroutes")
+  2 (defroutes context
+  3           ("/" (read (file "file/index.html")))                                                                                                           
+  4           ("/greeting" "hello"))
+  5 (println "---start http service")
+  6 (http-service 18080 context)  	
+  	</pre>
+  	<img src="./img/preview.png" />
+  </body>
+</html>

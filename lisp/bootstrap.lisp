@@ -1,6 +1,7 @@
 (println "---defroutes")
 (defroutes context
-          ("/" "<a href='/greeting'>greeting</a>")
+          ("/" (read (file "file/index.html")))
+          ("/img/preview.png" (read (file "file/img/preview.png")))
           ("/greeting" "hello"))
 (println "---start http service")
 (http-service 18080 context)

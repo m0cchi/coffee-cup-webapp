@@ -21,13 +21,18 @@ public class ElementContext implements HttpHandler {
 		this.proc = proc;
 	}
 
+	public static byte[] toBytes(Value<?> value) {
+		Object object = value.getNativeValue();
+		return (byte[]) (object instanceof byte[] ? object : object.toString().getBytes());
+	}
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public void handle(HttpExchange exchange) throws IOException {
 		Element element = semanticAnalyzer.evaluate(proc);
 		Headers responseHeaders = exchange.getResponseHeaders();
 		int status = 500;
-		String body = null;
+		byte[] body = new byte[0];
 		if (element instanceof SList) {
 			// 0: status
 			// 1: header
@@ -36,9 +41,9 @@ public class ElementContext implements HttpHandler {
 			Element[] values = ret.toArray();
 			status = ((Value<Integer>) values[0]).getNativeValue();
 			if (values.length == 2) {
-				body = ((Value<?>) values[1]).getNativeValue().toString();
+				body = toBytes((Value<?>) values[1]);
 			} else {
-				body = ((Value<?>) values[2]).getNativeValue().toString();
+				body = toBytes((Value<?>) values[2]);
 				SList headers = (SList) values[1];
 				for (Element tmp : headers.toArray()) {
 					SList header = (SList) tmp;
@@ -51,11 +56,10 @@ public class ElementContext implements HttpHandler {
 		} else {
 			// body
 			status = 200;
-			body = ((Value<?>) element).getNativeValue().toString();
+			body = toBytes((Value<?>) element);
 		}
-		byte[] bodyBytes = body.getBytes();
-		exchange.sendResponseHeaders(status, bodyBytes.length);
-		exchange.getResponseBody().write(bodyBytes);
+		exchange.sendResponseHeaders(status, body.length);
+		exchange.getResponseBody().write(body);
 		exchange.close();
 	}
 

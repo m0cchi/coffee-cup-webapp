@@ -17,7 +17,7 @@ public class HttpService extends Function {
 	private static final long serialVersionUID = 5079977203818388645L;
 
 	public HttpService() {
-		setArgs(new String[] { "port number", "contexts" });
+		setArgs(new String[] { "port number", " contexts" });
 	}
 
 	@Override
