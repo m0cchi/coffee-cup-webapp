@@ -1,6 +1,10 @@
 (println "---defroutes")
+(defvar myname "m0cchi")
+(defun greeting (name)
+  (str "hello, " name))
 (defroutes context
           ("/" (read (file "file/index.html")))
+          ("/name" (template (read (file "file/template.list.html"))))
           ("/img/preview.png" (read (file "file/img/preview.png")))
           ("/greeting" "hello"))
 (println "---start http service")
