@@ -12,6 +12,7 @@ import net.m0cchi.value.Environment;
 import net.m0cchi.value.Function;
 import net.m0cchi.value.NULL.NIL;
 import net.m0cchi.value.SList;
+import net.m0cchi.value.SafeEnvironment;
 import net.m0cchi.value.Value;
 
 public class Eval extends Function {
@@ -81,6 +82,9 @@ public class Eval extends Function {
 		SyntaxAnalyzer syntaxAnalyzer = new SyntaxAnalyzer(lexicalAnalyzer);
 		SList list = (SList) syntaxAnalyzer.parse();
 		Element ret = null;
+		if (!(environment instanceof SafeEnvironment)) {
+			environment = SafeEnvironment.toSafe(environment);
+		}
 		SemanticAnalyzer semanticAnalyzer = new SemanticAnalyzer(environment);
 		for (Element element : list.toArray()) {
 			ret = semanticAnalyzer.evaluate(element);
