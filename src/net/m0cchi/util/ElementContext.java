@@ -33,7 +33,7 @@ public class ElementContext implements HttpHandler {
 	}
 
 	public static void setQueryString(Environment environment, String querys) {
-		if(querys == null) {
+		if (querys == null) {
 			return;
 		}
 		for (String query : querys.split("&")) {
@@ -66,7 +66,6 @@ public class ElementContext implements HttpHandler {
 		Environment environment = getEnvironment();
 		SemanticAnalyzer semanticAnalyzer = new SemanticAnalyzer(environment);
 		try {
-
 			setQueryString(environment, exchange.getRequestURI().getQuery());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -85,7 +84,15 @@ public class ElementContext implements HttpHandler {
 			return;
 		}
 
-		Element element = semanticAnalyzer.evaluate(proc);
+		Element element = null;
+		try {
+			element = semanticAnalyzer.evaluate(proc);
+		} catch (Exception e) {
+			e.printStackTrace();
+			HttpUtil.send500(exchange);
+			return;
+		}
+		
 		Headers responseHeaders = exchange.getResponseHeaders();
 		int status = 500;
 		byte[] body = new byte[0];
