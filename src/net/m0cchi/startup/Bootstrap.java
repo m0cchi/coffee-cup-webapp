@@ -42,6 +42,7 @@ public class Bootstrap {
 		environment.defineFunction(new Str());
 		environment.defineFunction(".", new Invoke());
 		environment.defineFunction("new", new New());
+		environment.defineVariable("env", new Value<Environment>(AtomicType.JAVA, environment));
 		// safe eval sample
 		Eval eval = new Eval();
 		// easy
