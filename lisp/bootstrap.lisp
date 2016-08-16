@@ -10,4 +10,17 @@
   ("/byte" (new java.lang.String (read (file "bootstrap.lisp"))))
   ("/greeting" "hello"))
 (println "---start http service")
-(http-service 18080 context)
+(defvar app (http-service 18080 context))
+;; -- new context
+(defun append-context (app path env context)
+  (. createContext app path
+     (new net.m0cchi.util.ElementContext env
+          (new net.m0cchi.value.JValue context))))
+
+(append-context app "/later" (new net.m0cchi.value.Environment env)
+                (str "later proc"))
+
+(. removeContext app "/later")
+
+(append-context app "/later" (new net.m0cchi.value.Environment env)
+                (str "over write"))
