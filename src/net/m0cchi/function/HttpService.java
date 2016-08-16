@@ -34,7 +34,6 @@ public class HttpService extends Function {
 				Value<String> path = (Value<String>) context.get(0);
 				Value<?> proc = (Value<?>) context.get(1);
 				server.createContext(path.getNativeValue(), new ElementContext(environment, proc));
-
 			}
 			server.start();
 		} catch (IOException e) {
