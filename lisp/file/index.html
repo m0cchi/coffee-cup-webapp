@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
-  	<meta charset="utf-8" />
-  	<title>coffee sample app</title>
+    <meta charset="utf-8" />
+    <title>coffee sample app</title>
   </head>
   <body>
-  	<pre>
-  1 (println "---defroutes")
-  2 (defroutes context
-  3           ("/" (read (file "file/index.html")))                                                                                                           
-  4           ("/greeting" "hello"))
-  5 (println "---start http service")
-  6 (http-service 18080 context)  	
-  	</pre>
-  	<img src="./img/preview.png" />
-  	<br>
-  	<a href="/greeting">greeting</a>
-        <a href="/name">template sample</a>
-        <a href="/byte">use java sample</a>
-        <a href="/code-runner?code=(greeting-message)">code-runner</a>
-        <hr>
-        <a href="https://github.com/m0cchi/coffee-cup-webapp">https://github.com/m0cchi/coffee-cup-webapp</a>
+    <pre>
+      1 (println "---defroutes")
+      2 (defroutes context
+      3           ("/" (read (file "file/index.html")))                                                                                                           
+      4           ("/greeting" "hello"))
+      5 (println "---start http service")
+      6 (http-service 18080 context)  	
+    </pre>
+    <img src="./img/preview.png" />
+    <br>
+    <a href="/greeting">greeting</a>
+    <a href="/name">template sample</a>
+    <a href="/byte">use java sample</a>
+    <a href="/code-runner?code=(greeting-message)">code-runner</a>
+    <hr>
+    <a href="https://github.com/m0cchi/coffee-cup-webapp">https://github.com/m0cchi/coffee-cup-webapp</a>
   </body>
 </html>
