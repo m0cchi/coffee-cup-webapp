@@ -3,6 +3,7 @@ package net.m0cchi.function;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.m0cchi.function.java.New;
 import net.m0cchi.value.AtomicType;
 import net.m0cchi.value.Element;
 import net.m0cchi.value.Environment;
@@ -26,7 +27,7 @@ public class DefRoutes extends Macro {
 		Value<?> nameValue = (Value<?>) environment.getValue(getArgs()[0]);
 		SList context = (SList) environment.getValue(getArgs()[2]);
 		List<Element> ret = new ArrayList<>();
-		ret.add(new Value<String>(AtomicType.SYMBOL, "defvar")); // defvar ...?
+		ret.add(new Value<String>(AtomicType.SYMBOL, new Defvar().getName())); // defvar ...?
 		ret.add(nameValue);
 		ret.add(new Value<SList>(AtomicType.QUOTE, context));
 		return new SList(ret);

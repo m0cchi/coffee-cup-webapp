@@ -2,7 +2,6 @@ package net.m0cchi.startup;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 
 import net.m0cchi.function.DefRoutes;
 import net.m0cchi.function.Defun;
@@ -10,7 +9,6 @@ import net.m0cchi.function.Defvar;
 import net.m0cchi.function.DoList;
 import net.m0cchi.function.Eval;
 import net.m0cchi.function.HttpService;
-import net.m0cchi.function.Nop;
 import net.m0cchi.function.Path2Stream;
 import net.m0cchi.function.Println;
 import net.m0cchi.function.ReadStream;
@@ -32,39 +30,22 @@ public class Bootstrap {
 		Program program = new Program(new File("lisp/bootstrap.lisp"));
 		Environment environment = program.getEnvironment();
 		environment.naming("web-app");
-		environment.defineFunction("defvar", new Defvar());
-		environment.defineFunction("defun", new Defun());
-		environment.defineFunction("defroutes", new DefRoutes());
-		environment.defineFunction("http-service", new HttpService());
-		environment.defineFunction("do", new DoList());
-		environment.defineFunction("println", new Println());
+		environment.defineFunction(new Defvar());
+		environment.defineFunction(new Defun());
+		environment.defineFunction(new DefRoutes());
+		environment.defineFunction(new HttpService());
+		environment.defineFunction(new DoList());
+		environment.defineFunction(new Println());
 		environment.defineFunction("file", new Path2Stream());
 		environment.defineFunction("read", new ReadStream());
-		environment.defineFunction("template", new Template());
-		environment.defineFunction("str", new Str());
+		environment.defineFunction(new Template());
+		environment.defineFunction(new Str());
 		environment.defineFunction(".", new Invoke());
 		environment.defineFunction("new", new New());
 		// safe eval sample
-		Nop nop = new Nop();
 		Eval eval = new Eval();
 		// easy
-		// eval.setRemoveAllFunction(true);
-		Arrays.asList(
-				new String[] {
-						"http-service",
-						"defvar",
-						"defun",
-						"defroutes",
-						"file",
-						"read",
-						"template",
-						".",
-						"new",
-						"eval",
-						"str",
-						"println",
-						"do"
-		}).stream().forEach(str -> eval.hook(str, nop));
+		eval.setRemoveAllFunction(true);
 		
 		String message = "code runner<br>"
 				+ "/code-runner?code=(greeting-message) ;;=> this message<br>"
