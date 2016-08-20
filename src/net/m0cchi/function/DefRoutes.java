@@ -3,7 +3,6 @@ package net.m0cchi.function;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.m0cchi.function.java.New;
 import net.m0cchi.value.AtomicType;
 import net.m0cchi.value.Element;
 import net.m0cchi.value.Environment;
