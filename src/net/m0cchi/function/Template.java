@@ -114,7 +114,7 @@ public class Template extends Function {
 			parse(environment, bais, baos);
 			ret = new Value<byte[]>(AtomicType.JAVA, baos.toByteArray());
 		} catch (IOException e) {
-			ret = new NIL();
+			ret = NIL.NIL;
 		} finally {
 			try {
 				baos.close();

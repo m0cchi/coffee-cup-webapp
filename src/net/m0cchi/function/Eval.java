@@ -62,7 +62,7 @@ public class Eval extends Function {
 		}
 
 		if (removeAllVariable) {
-			Element nil = new NIL();
+			Element nil = NIL.NIL;
 			Arrays.stream(env.getAllVariablesName()).forEach(name -> env.defineVariable(name, nil));
 		}
 

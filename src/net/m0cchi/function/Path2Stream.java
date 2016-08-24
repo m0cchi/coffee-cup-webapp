@@ -29,7 +29,7 @@ public class Path2Stream extends Function {
 			FileInputStream fis = new FileInputStream(file);
 			ret = new Value<InputStream>(AtomicType.JAVA, fis);
 		} catch (FileNotFoundException e) {
-			ret = new NIL();
+			ret = NIL.NIL;
 		}
 		return ret;
 	}
