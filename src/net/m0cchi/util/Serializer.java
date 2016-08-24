@@ -11,7 +11,7 @@ import net.m0cchi.value.Element;
 
 public class Serializer {
 	
-	public static void dump(String path, Element element) throws IOException {
+	public static void serialize(String path, Element element) throws IOException {
 		File file = new File(path);
 		FileOutputStream fos = new FileOutputStream(file);
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
