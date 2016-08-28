@@ -9,4 +9,8 @@ public class LTEq extends Comparator {
 		return i <= 0;
 	}
 
+	public String getName() {
+		return "<=";
+	}
+
 }
