@@ -42,19 +42,19 @@ public class Eval extends Function {
 		return this;
 	}
 
-	public boolean isRemoveAllFunction() {
+	public boolean canRemoveAllFunction() {
 		return removeAllFunction;
 	}
 
-	public void setRemoveAllFunction(boolean removeAllFunction) {
+	public void removeAllFunction(boolean removeAllFunction) {
 		this.removeAllFunction = removeAllFunction;
 	}
 
-	public boolean isRemoveAllVariable() {
+	public boolean canRemoveAllVariable() {
 		return removeAllVariable;
 	}
 
-	public void setRemoveAllVariable(boolean removeAllVariable) {
+	public void removeAllVariable(boolean removeAllVariable) {
 		this.removeAllVariable = removeAllVariable;
 	}
 

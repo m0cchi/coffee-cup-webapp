@@ -46,7 +46,7 @@ public class Bootstrap {
 		// safe eval sample
 		Eval eval = new Eval();
 		// easy
-		eval.setRemoveAllFunction(true);
+		eval.removeAllFunction(true);
 		
 		String message = "code runner<br>"
 				+ "/code-runner?code=(greeting-message) ;;=> this message<br>"
