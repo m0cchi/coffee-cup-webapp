@@ -1,7 +1,9 @@
 package net.m0cchi.function;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.m0cchi.parser.lexical.StringLexicalAnalyzer;
@@ -19,6 +21,7 @@ public class Eval extends Function {
 	private static final long serialVersionUID = 6317077209149111763L;
 	private final Map<String, Function> hookFunction;
 	private final Map<String, Element> hookVariable;
+	private final List<Function> postFunctions;
 	private boolean removeAllFunction;
 	private boolean removeAllVariable;
 
@@ -26,6 +29,7 @@ public class Eval extends Function {
 		setArgs(new String[] { "eval string" });
 		this.hookFunction = new HashMap<>();
 		this.hookVariable = new HashMap<>();
+		this.postFunctions = new ArrayList<>();
 	}
 
 	public Eval hook(String name, Function function) {
@@ -54,8 +58,19 @@ public class Eval extends Function {
 		this.removeAllVariable = removeAllVariable;
 	}
 
-	public Element postFilter(Environment environment, Element[] element) {
-		return element[0];
+	public void addPostFunction(Function function) {
+		this.postFunctions.add(function);
+	}
+
+	public Element postFilter(Environment environment, Element element) {
+		Element[] ret = { element };
+
+		for (Function function : postFunctions) {
+			Element res = function.invoke(environment, ret);
+			ret = new Element[] { res };
+		}
+
+		return ret[0];
 	}
 
 	@Override
@@ -93,7 +108,7 @@ public class Eval extends Function {
 		for (Element element : list.toArray()) {
 			ret = semanticAnalyzer.evaluate(element);
 		}
-		return postFilter(environment, new Element[] { ret });
+		return postFilter(environment, ret);
 	}
 
 }
