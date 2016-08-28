@@ -54,6 +54,10 @@ public class Eval extends Function {
 		this.removeAllVariable = removeAllVariable;
 	}
 
+	public Element postFilter(Environment environment, Element[] element) {
+		return element[0];
+	}
+
 	@Override
 	public void hook(Environment env) {
 		if (removeAllFunction) {
@@ -89,7 +93,7 @@ public class Eval extends Function {
 		for (Element element : list.toArray()) {
 			ret = semanticAnalyzer.evaluate(element);
 		}
-		return ret;
+		return postFilter(environment, new Element[] { ret });
 	}
 
 }
