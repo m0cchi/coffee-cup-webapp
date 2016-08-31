@@ -18,20 +18,31 @@ public class Require extends Function {
 		setArgs("file path");
 	}
 
+	private static boolean isAbsolutePath(String path) {
+		return path.matches("^/.*");
+	}
+
 	@Override
 	public Element invoke(Environment environment) {
 		Value<?> filePathValue = (Value<?>) environment.getValue(getArgs()[0]);
 		Object filePath = filePathValue.getNativeValue();
+		String path = null;
 		Program program = null;
 		File file = null;
 		String currentDir = System.getProperty("user.dir");
+
 		if (filePath instanceof File) {
-			file = (File) filePath;
+			path = ((File) filePath).getAbsolutePath();
 		} else {
-			String path = filePath.toString();
-			System.out.println(path);
+			path = filePath.toString();
+		}
+
+		if (isAbsolutePath(path)) {
+			file = new File(path);
+		} else {
 			file = new File(currentDir, path);
 		}
+
 		try {
 			program = new Program(file);
 			program.getEnvironment().setParent(environment);
