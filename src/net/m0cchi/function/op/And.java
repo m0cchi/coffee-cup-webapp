@@ -23,13 +23,14 @@ public class And extends Macro {
 		SList list = (SList) environment.getValue(getArgs()[0]);
 		Iterator<Element> iterator = list.getNativeValue().iterator();
 		SemanticAnalyzer semanticAnalyzer = new SemanticAnalyzer(environment);
+		Element result = null;
 		while (iterator.hasNext()) {
-			Element result = semanticAnalyzer.evaluate(iterator.next());
+			result = semanticAnalyzer.evaluate(iterator.next());
 			if (!ToBoolean.isTrue(result)) {
-				return result;
+				return new Value<Boolean>(AtomicType.BOOL, false);
 			}
 		}
-		return new Value<Boolean>(AtomicType.BOOL, true);
+		return result;
 	}
 
 }
