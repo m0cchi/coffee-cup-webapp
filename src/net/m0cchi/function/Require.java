@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import net.m0cchi.exception.handler.Abort;
+import net.m0cchi.util.PathUtil;
 import net.m0cchi.util.Program;
 import net.m0cchi.value.Element;
 import net.m0cchi.value.Environment;
@@ -16,10 +17,6 @@ public class Require extends Function {
 
 	public Require() {
 		setArgs("file path");
-	}
-
-	private static boolean isAbsolutePath(String path) {
-		return path.matches("^/.*");
 	}
 
 	@Override
@@ -37,12 +34,8 @@ public class Require extends Function {
 			path = filePath.toString();
 		}
 
-		if (isAbsolutePath(path)) {
-			file = new File(path);
-		} else {
-			file = new File(currentDir, path);
-		}
-
+		file = PathUtil.path2File(path);
+		
 		try {
 			program = new Program(file);
 			program.getEnvironment().setParent(environment);
