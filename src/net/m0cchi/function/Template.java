@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,29 +29,27 @@ public class Template extends Function {
 
 	public static void parseCode(Environment environment, InputStream in, OutputStream out) throws IOException {
 		int code;
-		int pCounter = 0;
-		boolean quote = false;
+		int countCodeBlock = 0;
+		List<Integer> cache = new ArrayList<>();
+		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		while ((code = in.read()) >= 0) {
-			if (code == '\\') {
-				out.write(code);
+
+			if (code == '}') {
+				countCodeBlock++;
+				if (countCodeBlock == 3) {
+					break;
+				}
+				cache.add(code);
 				continue;
-			}
-
-			if (!quote && pCounter == 0 && code == '}') {
-				break;
-			}
-
-			if (code == '(') {
-				pCounter++;
-			} else if (code == ')') {
-				pCounter--;
-			}
-
-			if (!quote && code == '"') {
-				quote = true;
-			} else if (quote && code == '"') {
-				quote = false;
+			} else {
+				countCodeBlock = 0;
+				if (!cache.isEmpty()) {
+					for (int tmp : cache) {
+						baos.write(tmp);
+					}
+					cache.clear();
+				}
 			}
 
 			baos.write(code);
@@ -79,13 +78,20 @@ public class Template extends Function {
 	public static void parse(Environment environment, InputStream in, OutputStream out) throws IOException {
 		int code;
 		List<Integer> cache = new ArrayList<>();
+		int codeBlockFlag = 0;
 		while ((code = in.read()) >= 0) {
 			if (code == '#') {
 				cache.add(code);
 				continue;
 			} else if (code == '{') {
-				parseCode(environment, in, out);
-				cache.clear();
+				if (codeBlockFlag == 2) {
+					parseCode(environment, in, out);
+					cache.clear();
+					codeBlockFlag = 0;
+				} else {
+					codeBlockFlag++;
+					cache.add(code);
+				}
 			} else {
 				if (!cache.isEmpty()) {
 					for (int tmp : cache) {
@@ -110,6 +116,8 @@ public class Template extends Function {
 		ByteArrayInputStream bais = new ByteArrayInputStream(template);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		Element ret = null;
+		PrintStream systemOut = System.out;
+		System.setOut(new PrintStream(baos));
 		try {
 			parse(environment, bais, baos);
 			ret = new Value<byte[]>(AtomicType.JAVA, baos.toByteArray());
@@ -126,6 +134,7 @@ public class Template extends Function {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			System.setOut(systemOut);
 		}
 		return ret;
 	}
