@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import net.m0cchi.util.PathUtil;
 import net.m0cchi.value.AtomicType;
 import net.m0cchi.value.Element;
 import net.m0cchi.value.Environment;
@@ -22,8 +23,8 @@ public class Path2Stream extends Function {
 	@Override
 	public Element invoke(Environment environment) {
 		Value<?> pathValue = (Value<?>) environment.getValue(getArgs()[0]);
-		String path = System.getProperty("user.dir") + "/" + pathValue.getNativeValue().toString();
-		File file = new File(path);
+		String path =  pathValue.getNativeValue().toString();
+		File file = PathUtil.path2File(path);
 		Element ret = null;
 		try {
 			FileInputStream fis = new FileInputStream(file);
