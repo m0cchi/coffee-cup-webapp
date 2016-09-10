@@ -12,6 +12,9 @@ public class SafeEnvironment extends Environment {
 		super(environment);
 	}
 
+	/**
+	 * safe function
+	 */
 	@Override
 	public void setValue(String name, Element element) {
 		super.defineVariable(name, element);
