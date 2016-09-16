@@ -17,8 +17,8 @@ public abstract class Comparator extends Function {
 
 	@Override
 	public Element invoke(Environment environment) {
-		Value<?> num1Value = (Value<?>) environment.getValue(getArgs()[0]);
-		Value<?> num2Value = (Value<?>) environment.getValue(getArgs()[1]);
+		Value<?> num1Value = environment.getValue(getArgs()[0]);
+		Value<?> num2Value = environment.getValue(getArgs()[1]);
 		Object num1 = num1Value.getNativeValue();
 		Object num2 = num2Value.getNativeValue();
 		boolean ret = false;

@@ -57,7 +57,7 @@ public class Template extends Function {
 		StringLexicalAnalyzer lexicalAnalyzer = new StringLexicalAnalyzer(baos.toString());
 		SyntaxAnalyzer syntaxAnalyzer = new SyntaxAnalyzer(lexicalAnalyzer);
 		SemanticAnalyzer semanticAnalyzer = new SemanticAnalyzer(environment);
-		SList list = (SList) syntaxAnalyzer.parse();
+		SList list = syntaxAnalyzer.parse();
 		Element ret = null;
 		for (Element value : list.toArray()) {
 			ret = semanticAnalyzer.evaluate(value);
@@ -111,7 +111,7 @@ public class Template extends Function {
 
 	@Override
 	public Element invoke(Environment environment) {
-		Value<?> templateValue = (Value<?>) environment.getValue(getArgs()[0]);
+		Value<?> templateValue = environment.getValue(getArgs()[0]);
 		byte[] template = toBytes(templateValue);
 		ByteArrayInputStream bais = new ByteArrayInputStream(template);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();

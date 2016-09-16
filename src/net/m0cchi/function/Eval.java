@@ -96,10 +96,10 @@ public class Eval extends Function {
 
 	@Override
 	public Element invoke(Environment environment) {
-		Value<?> codeValue = (Value<?>) environment.getValue(getArgs()[0]);
+		Value<?> codeValue = environment.getValue(getArgs()[0]);
 		StringLexicalAnalyzer lexicalAnalyzer = new StringLexicalAnalyzer(codeValue.getNativeValue().toString());
 		SyntaxAnalyzer syntaxAnalyzer = new SyntaxAnalyzer(lexicalAnalyzer);
-		SList list = (SList) syntaxAnalyzer.parse();
+		SList list = syntaxAnalyzer.parse();
 		Element ret = null;
 		if (!(environment instanceof SafeEnvironment)) {
 			environment = SafeEnvironment.toSafe(environment);

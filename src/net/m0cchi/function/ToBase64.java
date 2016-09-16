@@ -19,7 +19,7 @@ public class ToBase64 extends Function {
 
 	@Override
 	public Element invoke(Environment environment) {
-		Value<?> target = (Value<?>) environment.getValue(getArgs()[0]);
+		Value<?> target = environment.getValue(getArgs()[0]);
 		Object object = target.getNativeValue();
 		byte[] bytes = null;
 		if (object instanceof byte[]) {

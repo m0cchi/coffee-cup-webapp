@@ -22,17 +22,15 @@ public class HttpService extends Function {
 
 	@Override
 	public Element invoke(Environment environment) {
-		@SuppressWarnings("unchecked")
-		Value<Integer> portValue = (Value<Integer>) environment.getValue(getArgs()[0]);
-		SList contexts = (SList) environment.getValue(getArgs()[1]);
+		Value<Integer> portValue = environment.getValue(getArgs()[0]);
+		SList contexts = environment.getValue(getArgs()[1]);
 		HttpServer server = null;
 		try {
 			server = HttpServer.create(new InetSocketAddress(portValue.getNativeValue()), 0);
 			for (Element element : contexts.toArray()) {
 				SList context = (SList) element;
-				@SuppressWarnings("unchecked")
-				Value<String> path = (Value<String>) context.get(0);
-				Value<?> proc = (Value<?>) context.get(1);
+				Value<String> path = context.get(0);
+				Value<?> proc = context.get(1);
 				server.createContext(path.getNativeValue(), new ElementContext(environment, proc));
 			}
 			server.start();

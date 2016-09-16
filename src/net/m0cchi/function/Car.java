@@ -14,7 +14,7 @@ public class Car extends Function {
 
 	@Override
 	public Element invoke(Environment environment) {
-		SList list = (SList) environment.getValue(getArgs()[0]);
+		SList list = environment.getValue(getArgs()[0]);
 		return list.get(0);
 	}
 

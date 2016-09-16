@@ -14,12 +14,10 @@ public class Not extends ToBoolean {
 	}
 
 	@Override
-	public Element invoke(Environment environment) {
-		@SuppressWarnings({ "unchecked" })
-		Value<Boolean> result = (Value<Boolean>) super.invoke(environment);
+	public Value<Boolean> invoke(Environment environment) {
+		Value<Boolean> result = super.invoke(environment);
 		Boolean element = result.getNativeValue();
-		Element ret = new Value<Boolean>(AtomicType.BOOL, !element);
-		return ret;
+		return new Value<Boolean>(AtomicType.BOOL, !element);
 	}
 
 }

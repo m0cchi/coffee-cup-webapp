@@ -15,10 +15,8 @@ public class Matches extends Function {
 
 	@Override
 	public Element invoke(Environment environment) {
-		@SuppressWarnings("unchecked")
-		Value<String> regex = (Value<String>) environment.getValue(getArgs()[0]);
-		@SuppressWarnings("unchecked")
-		Value<String> target = (Value<String>) environment.getValue(getArgs()[1]);
+		Value<String> regex = environment.getValue(getArgs()[0]);
+		Value<String> target = environment.getValue(getArgs()[1]);
 		boolean result = target.getNativeValue().matches(regex.getNativeValue());
 
 		return new Value<Boolean>(AtomicType.BOOL, result);

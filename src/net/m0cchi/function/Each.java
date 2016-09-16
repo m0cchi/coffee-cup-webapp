@@ -19,13 +19,13 @@ public class Each extends Macro {
 
 	@Override
 	public Element invoke(Environment environment) {
-		SList arg = (SList) environment.getValue(getArgs()[0]);
-		Value<?> var = (Value<?>) arg.get(0);
+		SList arg = environment.getValue(getArgs()[0]);
+		Value<?> var = arg.get(0);
 		String name = var.getNativeValue().toString();
-		SList list = (SList) arg.get(1);
+		SList list = arg.get(1);
 		Iterator<Element> it = list.getNativeValue().iterator();
 		
-		SList body = (SList) environment.getValue(getArgs()[1]);
+		SList body = environment.getValue(getArgs()[1]);
 		Element ret = NIL.NIL;
 		
 		Environment env = new Environment(environment);

@@ -19,8 +19,7 @@ public class Read extends Function {
 	
 	@Override
 	public Element invoke(Environment environment) {
-		@SuppressWarnings("unchecked")
-		Value<InputStream> inputStreamValue = (Value<InputStream>) environment.getValue(getArgs()[0]);
+		Value<InputStream> inputStreamValue = environment.getValue(getArgs()[0]);
 		InputStream is = inputStreamValue.getNativeValue();
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		byte[] ret = new byte[0];

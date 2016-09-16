@@ -20,7 +20,7 @@ public class And extends Macro {
 
 	@Override
 	public Element invoke(Environment environment) {
-		SList list = (SList) environment.getValue(getArgs()[0]);
+		SList list = environment.getValue(getArgs()[0]);
 		Iterator<Element> iterator = list.getNativeValue().iterator();
 		SemanticAnalyzer semanticAnalyzer = new SemanticAnalyzer(environment);
 		Element result = null;

@@ -16,10 +16,8 @@ public class Setq extends Macro {
 
 	@Override
 	public Element invoke(Environment environment) {
-		@SuppressWarnings("unchecked")
-		Value<String> name = (Value<String>) environment.getValue(getArgs()[0]);
-		@SuppressWarnings("unchecked")
-		Value<String> value = (Value<String>) environment.getValue(getArgs()[1]);
+		Value<String> name = environment.getValue(getArgs()[0]);
+		Value<String> value = environment.getValue(getArgs()[1]);
 		Environment parent = environment.getParent();
 		SemanticAnalyzer semanticAnalyzer = new SemanticAnalyzer(environment);
 		parent.setValue(name.getNativeValue(), semanticAnalyzer.evaluate(value));

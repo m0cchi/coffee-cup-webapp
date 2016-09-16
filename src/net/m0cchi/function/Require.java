@@ -21,7 +21,7 @@ public class Require extends Function {
 
 	@Override
 	public Element invoke(Environment environment) {
-		Value<?> filePathValue = (Value<?>) environment.getValue(getArgs()[0]);
+		Value<?> filePathValue = environment.getValue(getArgs()[0]);
 		Object filePath = filePathValue.getNativeValue();
 		String path = null;
 		Program program = null;

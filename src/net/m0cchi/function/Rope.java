@@ -20,7 +20,7 @@ public class Rope extends Macro {
 	@Override
 	public Element invoke(Environment environment) {
 		Element value = environment.getValue(getArgs()[0]);
-		SList sList = (SList) environment.getValue(getArgs()[2]);
+		SList sList = environment.getValue(getArgs()[2]);
 		Iterator<Element> iterator = sList.getNativeValue().iterator();
 
 		SemanticAnalyzer semanticAnalyzer = new SemanticAnalyzer(environment);

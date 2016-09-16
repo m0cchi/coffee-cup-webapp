@@ -22,7 +22,7 @@ public class Path2Stream extends Function {
 
 	@Override
 	public Element invoke(Environment environment) {
-		Value<?> pathValue = (Value<?>) environment.getValue(getArgs()[0]);
+		Value<?> pathValue = environment.getValue(getArgs()[0]);
 		String path =  pathValue.getNativeValue().toString();
 		File file = PathUtil.path2File(path);
 		Element ret = null;

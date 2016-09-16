@@ -14,7 +14,7 @@ public class Cdr extends Function {
 
 	@Override
 	public Element invoke(Environment environment) {
-		SList sList = (SList) environment.getValue(getArgs()[0]);
+		SList sList = environment.getValue(getArgs()[0]);
 		return sList.cdr();
 	}
 

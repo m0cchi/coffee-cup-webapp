@@ -17,7 +17,7 @@ public class Funcall extends Function {
 	@Override
 	public Element invoke(Environment environment) {
 		Element name = environment.getValue(getArgs()[0]);
-		SList sList = (SList) environment.getValue(getArgs()[2]);
+		SList sList = environment.getValue(getArgs()[2]);
 		Element[] args = sList.getNativeValue().toArray(new Element[0]);
 
 		Function function = null;

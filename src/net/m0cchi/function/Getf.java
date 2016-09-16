@@ -17,7 +17,7 @@ public class Getf extends Function {
 
 	@Override
 	public Element invoke(Environment environment) {
-		SList target = (SList) environment.getValue(getArgs()[0]);
+		SList target = environment.getValue(getArgs()[0]);
 		Element index = environment.getValue(getArgs()[1]);
 		
 		Iterator<Element> iterator = target.getNativeValue().iterator();

@@ -15,7 +15,7 @@ public class Println extends Function {
 
 	@Override
 	public Element invoke(Environment environment) {
-		SList list = (SList) environment.getValue(getArgs()[1]);
+		SList list = environment.getValue(getArgs()[1]);
 		Element[] values = list.toArray();
 		for (Element value : values) {
 			System.out.print(((Value<?>) value).getNativeValue());
