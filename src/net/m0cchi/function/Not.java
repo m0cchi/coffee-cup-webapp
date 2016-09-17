@@ -1,7 +1,6 @@
 package net.m0cchi.function;
 
 import net.m0cchi.value.AtomicType;
-import net.m0cchi.value.Element;
 import net.m0cchi.value.Environment;
 import net.m0cchi.value.Value;
 

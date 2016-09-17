@@ -28,7 +28,7 @@ public class Rope extends Macro {
 		while (iterator.hasNext()) {
 			Element element = iterator.next();
 			if (element instanceof SList) {
-				((SList) element).add(value);
+				((SList) element).addE(value);
 			} else {
 				List<Element> list = new ArrayList<>();
 				list.add(element);

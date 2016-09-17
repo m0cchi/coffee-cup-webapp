@@ -20,7 +20,7 @@ public class ArrayToSList extends Function {
 		Object array = arrayValue.getNativeValue();
 		SList list = new SList();
 		for (Object value : (Object[]) array) {
-			list.add(new Value<Object>(AtomicType.JAVA, value));
+			list.addE(new Value<Object>(AtomicType.JAVA, value));
 		}
 		return list;
 	}

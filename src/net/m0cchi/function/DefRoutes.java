@@ -24,9 +24,9 @@ public class DefRoutes extends Macro {
 	@Override
 	public Element invoke(Environment environment) {
 		Value<?> nameValue = environment.getValue(getArgs()[0]);
-		SList context = (SList) environment.getValue(getArgs()[2]);
+		SList context = environment.getValue(getArgs()[2]);
 		List<Element> ret = new ArrayList<>();
-		ret.add(new Value<String>(AtomicType.SYMBOL, new Defvar().getName())); // defvar ...?
+		ret.add(new Defvar());
 		ret.add(nameValue);
 		ret.add(new Value<SList>(AtomicType.QUOTE, context));
 		return new SList(ret);
