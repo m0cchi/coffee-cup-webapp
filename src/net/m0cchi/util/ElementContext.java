@@ -19,8 +19,8 @@ public class ElementContext implements HttpHandler {
 		GET, POST
 	}
 
-	Environment environment;
-	Value<?> proc;
+	private Environment environment;
+	private Value<?> proc;
 
 	public ElementContext(Environment environment, Value<?> proc) {
 		this.environment = environment;
