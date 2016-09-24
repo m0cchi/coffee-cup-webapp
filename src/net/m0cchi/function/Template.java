@@ -82,6 +82,7 @@ public class Template extends Function {
 		while ((code = in.read()) >= 0) {
 			if (code == '#') {
 				cache.add(code);
+				codeBlockFlag = 0;
 				continue;
 			} else if (code == '{') {
 				if (codeBlockFlag == 2) {
@@ -93,6 +94,7 @@ public class Template extends Function {
 					cache.add(code);
 				}
 			} else {
+				codeBlockFlag = 0;
 				if (!cache.isEmpty()) {
 					for (int tmp : cache) {
 						out.write(tmp);
