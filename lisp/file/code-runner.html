@@ -2,6 +2,10 @@
 <html>
 
 <body>
-#{(eval code)}
+#{{{
+(replace-string
+  (replace-string (str (eval code)) (make-map "<" "&lt;" ">" "&gt;"))
+  (make-map "\n" "<br>"))
+  }}}
 </body>
 </html>
