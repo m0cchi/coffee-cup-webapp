@@ -40,10 +40,9 @@ import net.m0cchi.value.SList;
 import net.m0cchi.value.Value;
 
 public class Bootstrap {
+	
+	public static void initFunctions(Environment environment) {
 
-	public static void main(String[] args) throws FileNotFoundException {
-		Program program = new Program(new File("lisp/bootstrap.lisp"));
-		Environment environment = program.getEnvironment();
 		environment.naming("web-app");
 		environment.defineFunction(new Defvar());
 		environment.defineFunction(new Defmacro());
@@ -128,6 +127,12 @@ public class Bootstrap {
 		});
 
 		environment.defineFunction("eval", eval);
+	}
+
+	public static void main(String[] args) throws FileNotFoundException {
+		Program program = new Program(new File("lisp/bootstrap.lisp"));
+		Environment environment = program.getEnvironment();
+		initFunctions(environment);
 		program.run();
 	}
 
