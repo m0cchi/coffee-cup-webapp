@@ -10,6 +10,7 @@ import net.m0cchi.function.Defun;
 import net.m0cchi.function.Defvar;
 import net.m0cchi.function.DoList;
 import net.m0cchi.function.Eval;
+import net.m0cchi.function.Exit;
 import net.m0cchi.function.Funcall;
 import net.m0cchi.function.HttpService;
 import net.m0cchi.function.MakeMap;
@@ -31,16 +32,18 @@ import net.m0cchi.function.handler.Loop;
 import net.m0cchi.function.java.Invoke;
 import net.m0cchi.function.java.InvokeStatic;
 import net.m0cchi.function.java.New;
-import net.m0cchi.util.Program;
 import net.m0cchi.value.AtomicType;
 import net.m0cchi.value.Element;
 import net.m0cchi.value.Environment;
 import net.m0cchi.value.Function;
 import net.m0cchi.value.SList;
 import net.m0cchi.value.Value;
+import sun.misc.Signal;
+import sun.misc.SignalHandler;
 
 public class Bootstrap {
-	
+	public static EnhancedProgram mainLoop;
+
 	public static void initFunctions(Environment environment) {
 
 		environment.naming("web-app");
@@ -69,6 +72,7 @@ public class Bootstrap {
 		environment.defineFunction(".", new Invoke());
 		environment.defineFunction(new InvokeStatic());
 		environment.defineFunction("new", new New());
+		environment.defineFunction(new Exit());
 		environment.defineFunction(new Setq());
 		environment.defineFunction(new MakeMap());
 		environment.defineVariable("env", new Value<Environment>(AtomicType.JAVA, environment));
@@ -129,11 +133,35 @@ public class Bootstrap {
 		environment.defineFunction("eval", eval);
 	}
 
-	public static void main(String[] args) throws FileNotFoundException {
-		Program program = new Program(new File("lisp/bootstrap.lisp"));
-		Environment environment = program.getEnvironment();
+	public static void initMainLoop(String path) throws FileNotFoundException {
+		if (mainLoop != null) {
+			mainLoop.stop();
+			mainLoop = null;
+		}
+		mainLoop = new EnhancedProgram(new File(path));
+		Environment environment = mainLoop.getEnvironment();
 		initFunctions(environment);
-		program.run();
+		mainLoop.start();
+	}
+
+	public static void main(String[] args) throws FileNotFoundException, InterruptedException {
+		final String path = new File("lisp/bootstrap.lisp").getAbsolutePath();
+		sun.misc.Signal hup = new sun.misc.Signal("HUP");
+		SignalHandler handler = new SignalHandler() {
+			@Override
+			public void handle(Signal arg0) {
+				try {
+					initMainLoop(path);
+				} catch (FileNotFoundException e) {
+					System.exit(1);
+				}
+			}
+		};
+		sun.misc.Signal.handle(hup, handler);
+		initMainLoop(path);
+		while (true) {
+			Thread.sleep(1000 * 60 * 60);
+		}
 	}
 
 }
