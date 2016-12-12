@@ -32,6 +32,7 @@ import net.m0cchi.function.handler.Loop;
 import net.m0cchi.function.java.Invoke;
 import net.m0cchi.function.java.InvokeStatic;
 import net.m0cchi.function.java.New;
+import net.m0cchi.function.op.Or;
 import net.m0cchi.value.AtomicType;
 import net.m0cchi.value.Element;
 import net.m0cchi.value.Environment;
@@ -73,6 +74,7 @@ public class Bootstrap {
 		environment.defineFunction(new InvokeStatic());
 		environment.defineFunction("new", new New());
 		environment.defineFunction(new Exit());
+		environment.defineFunction(new Or());
 		environment.defineFunction(new Setq());
 		environment.defineFunction(new MakeMap());
 		environment.defineVariable("env", new Value<Environment>(AtomicType.JAVA, environment));
