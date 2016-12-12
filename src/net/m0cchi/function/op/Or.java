@@ -6,11 +6,11 @@ import net.m0cchi.function.ToBoolean;
 import net.m0cchi.parser.semantic.SemanticAnalyzer;
 import net.m0cchi.value.Element;
 import net.m0cchi.value.Environment;
-import net.m0cchi.value.Function;
+import net.m0cchi.value.Macro;
 import net.m0cchi.value.NULL.NIL;
 import net.m0cchi.value.SList;
 
-public class Or extends Function {
+public class Or extends Macro {
 	private static final long serialVersionUID = -6044942386518114678L;
 
 	public Or() {
