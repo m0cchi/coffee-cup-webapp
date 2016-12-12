@@ -11,7 +11,7 @@ git clone https://github.com/m0cchi/coffee-cup-webapp.git
 cd coffee-cup-webapp
 mkdir bin
 find src/ -type f -print | grep java > srcfiles
-javac -cp ../../coffee-cup/CoffeeCup/bin/ -d bin @srcfiles
+javac -cp ../coffee-cup/CoffeeCup/bin/ -d bin @srcfiles
 ```
 
 # run
