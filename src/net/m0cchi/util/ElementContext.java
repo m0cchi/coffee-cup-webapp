@@ -33,17 +33,25 @@ public class ElementContext implements HttpHandler {
 	}
 
 	public static void setQueryString(Environment environment, String querys) {
-		if (querys == null) {
+		if (querys == null || querys.length() == 0) {
 			return;
 		}
+
+		SList params = new SList();
 		for (String query : querys.split("&")) {
+			Element value = null;
 			String[] pair = query.split("=");
 			if (pair.length == 2) {
-				environment.defineVariable(pair[0], new Value<String>(AtomicType.LETTER, pair[1]));
+				value = new Value<String>(AtomicType.LETTER, pair[1]);
 			} else {
-				environment.defineVariable(pair[0], new Value<Boolean>(AtomicType.BOOL, true));
+				value = new Value<Boolean>(AtomicType.BOOL, true);
 			}
+			environment.defineVariable(pair[0], value);
+
+			params.addE(new Value<String>(AtomicType.LETTER, pair[0]));
+			params.addE(value);
 		}
+		environment.defineVariable("params", params);
 	}
 
 	private void handlePost(HttpExchange exchange, Environment environment) throws Throwable {
@@ -92,7 +100,7 @@ public class ElementContext implements HttpHandler {
 			HttpUtil.send500(exchange);
 			return;
 		}
-		
+
 		Headers responseHeaders = exchange.getResponseHeaders();
 		int status = 500;
 		byte[] body = new byte[0];
